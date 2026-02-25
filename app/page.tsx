@@ -5,6 +5,7 @@ interface BlogPost {
   title: string;
   summary: string;
   content: string;
+  slug: string;
 }
 
 const mockPosts: BlogPost[] = [
@@ -12,25 +13,63 @@ const mockPosts: BlogPost[] = [
     id: 1,
     title: "Introducción a React Hooks",
     summary: "Aprende los fundamentos de React Hooks y cómo mejorar tus componentes funcionales.",
-    content: "Los React Hooks revolucionaron la forma en que escribimos componentes..."
+    content: `React Hooks revolucionaron la forma en que escribimos componentes funcionales. Antes de los Hooks, solo podíamos usar estado y otras características de React en componentes de clase. Con la introducción de useState, useEffect y otros hooks, ahora podemos crear componentes más limpios y reutilizables.
+
+El hook useState nos permite agregar estado a los componentes funcionales. Es simple de usar: devuelve un array con dos elementos, el valor actual del estado y una función para actualizarlo. Por ejemplo: const [count, setCount] = useState(0).
+
+useEffect es otro hook fundamental que nos permite ejecutar efectos secundarios en nuestros componentes. Podemos usarlo para hacer peticiones a APIs, suscribirnos a eventos o manipular el DOM. Acepta una función como primer argumento y un array de dependencias como segundo argumento.
+
+Los custom hooks nos permiten extraer lógica de componentes en funciones reutilizables. Por ejemplo, podríamos crear un hook useLocalStorage que sincronice el estado con localStorage, o un hook useFetch que maneje peticiones a APIs.
+
+Con los Hooks, el código React se vuelve más declarativo y fácil de entender. Podemos compartir lógica entre componentes sin cambiar la jerarquía de componentes, y podemos organizar mejor nuestro código separando la lógica de la UI.`,
+    slug: "introduccion-a-react-hooks"
   },
   {
     id: 2,
     title: "Tailwind CSS vs Styled Components",
     summary: "Comparativa entre dos de las librerías de CSS más populares en el ecosistema React.",
-    content: "En el mundo del desarrollo web moderno, la elección de herramientas CSS..."
+    content: `En el mundo del desarrollo web moderno, la elección de herramientas CSS es crucial para mantener código escalable y mantenible. Tailwind CSS y Styled Components representan dos enfoques fundamentalmente diferentes para manejar estilos en aplicaciones React.
+
+Tailwind CSS es un framework de CSS utility-first que proporciona clases de bajo nivel para construir diseños personalizados directamente en el HTML. Su principal ventaja es la consistencia del diseño y la reducción del tamaño del bundle CSS. Con Tailwind, no necesitas escribir CSS personalizado, sino que combinas clases predefinidas.
+
+Por otro lado, Styled Components es una librería CSS-in-JS que te permite escribir CSS real dentro de tus componentes JavaScript. Su enfoque se centra en la creación de componentes con estilos encapsulados y dinámicos. Es excelente para temas dinámicos y estilos basados en props.
+
+La elección entre ambos depende de tus necesidades específicas. Tailwind es ideal para proyectos donde la consistencia visual y la velocidad de desarrollo son prioridades. Styled Components brilla en aplicaciones con temas complejos y donde la lógica de estilos necesita estar estrechamente ligada a la lógica del componente.
+
+En términos de rendimiento, Tailwind generalmente tiene mejor rendimiento inicial ya que genera un CSS optimizado en tiempo de compilación. Styled Components, por su parte, genera estilos dinámicamente en tiempo de ejecución, lo que puede impactar el rendimiento inicial pero ofrece mayor flexibilidad.`,
+    slug: "tailwind-css-vs-styled-components"
   },
   {
     id: 3,
     title: "Next.js 15: Novedades",
     summary: "Descubre las nuevas características y mejoras de la última versión de Next.js.",
-    content: "Next.js 15 introduce mejoras significativas en rendimiento..."
+    content: `Next.js 15 introduce mejoras significativas en rendimiento y experiencia de desarrollo que están cambiando la forma en que construimos aplicaciones web React. Una de las características más importantes es el App Router, que reemplaza al Pages Router tradicional y ofrece un enfoque más intuitivo basado en layouts.
+
+Los Server Components son otra revolución en Next.js 15. Estos componentes se ejecutan en el servidor, lo que significa que pueden acceder directamente a bases de datos y APIs sin exponer credenciales al cliente. Esto resulta en aplicaciones más seguras y con mejor rendimiento, ya que el JavaScript enviado al cliente es mínimo.
+
+La optimización de imágenes ha mejorado considerablemente con el componente Image actualizado, que ahora soporta lazy loading automático y optimización avanzada de formatos. Además, las mejoras en el sistema de caching permiten un control más granular sobre cómo se almacenan las respuestas del servidor.
+
+Otra característica destacada es el soporte mejorado para Server Actions, que simplifica el manejo de mutaciones de datos sin necesidad de crear APIs endpoints manualmente. Esto reduce significativamente el código boilerplate y mejora la experiencia de desarrollo.
+
+Las mejoras en el sistema de compilación incluyen soporte experimental para Turbopack, que promete velocidades de compilación hasta 5 veces más rápidas en desarrollo local. Además, la integración con React 18 y las nuevas características concurrentes permiten experiencias de usuario más fluidas.`,
+    slug: "nextjs-15-novedades"
   },
   {
     id: 4,
     title: "TypeScript Avanzado",
     summary: "Técnicas avanzadas de TypeScript para aplicaciones enterprise.",
-    content: "TypeScript ha evolucionado para soportar patrones complejos..."
+    content: `TypeScript ha evolucionado para soportar patrones complejos que son esenciales en aplicaciones enterprise a gran escala. Los generics son una de las características más poderosas, permitiendo crear componentes y funciones reutilizables que mantengan la seguridad de tipos.
+
+Los tipos condicionales permiten crear tipos que cambian basados en condiciones, lo cual es increíblemente útil para crear APIs flexibles. Por ejemplo, podemos crear tipos que se ajusten automáticamente según los parámetros recibidos, eliminando la necesidad de múltiples sobrecargas.
+
+Los mapped types son otra herramienta fundamental para la manipulación de tipos. Nos permiten transformar propiedades de un tipo existente, creando nuevos tipos basados en reglas específicas. Esto es especialmente útil para crear variantes de interfaces o para modificar propiedades opcionales.
+
+Los decorators, aunque aún experimentales en TypeScript, ofrecen una forma elegante de añadir metadatos y comportamiento a clases y métodos. Son particularmente útiles en frameworks como NestJS o para implementar patrones como logging, validación o caching de forma declarativa.
+
+Los tipos de utilidad como Partial, Required, Pick y Omit son esenciales para el día a día, pero TypeScript también permite crear tipos de utilidad personalizados que se ajusten a las necesidades específicas de tu aplicación.
+
+Para aplicaciones enterprise, es crucial entender cómo estructurar tipos complejos, manejar tipos recursivos, y crear sistemas de tipos que escalen con el crecimiento de la aplicación. Esto incluye patrones como Brand Types para mayor seguridad y tipos discriminados para manejar diferentes estados de datos.`,
+    slug: "typescript-avanzado"
   }
 ];
 
@@ -102,7 +141,7 @@ export default function HomePage() {
                 </div>
                 <Link 
                   href="/about"
-                  className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
+                  className="inline-flex items-center px-6 py-3 bg-black text-white font-medium rounded-lg hover:bg-gray-800 transition-colors"
                 >
                   Ver más
                 </Link>
@@ -131,12 +170,15 @@ export default function HomePage() {
                 <p className="text-gray-600 mb-6 leading-relaxed">
                   {featuredPost.summary}
                 </p>
-                <button className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium transition-colors">
+                <Link 
+                  href={`/blog/${featuredPost.slug}`}
+                  className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium transition-colors"
+                >
                   Leer más
                   <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
-                </button>
+                </Link>
               </div>
 
               {/* Recent Posts List */}
@@ -158,9 +200,12 @@ export default function HomePage() {
                       <p className="text-sm text-gray-600 mb-3 line-clamp-2">
                         {post.summary}
                       </p>
-                      <button className="text-sm text-blue-600 hover:text-blue-700 font-medium transition-colors">
+                      <Link 
+                        href={`/blog/${post.slug}`}
+                        className="text-sm text-blue-600 hover:text-blue-700 font-medium transition-colors"
+                      >
                         Leer
-                      </button>
+                      </Link>
                     </div>
                   </div>
                 ))}

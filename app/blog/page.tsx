@@ -5,6 +5,7 @@ interface BlogPost {
   title: string;
   summary: string;
   content: string;
+  slug: string;
 }
 
 const mockPosts: BlogPost[] = [
@@ -12,43 +13,50 @@ const mockPosts: BlogPost[] = [
     id: 1,
     title: "Introducción a React Hooks",
     summary: "Aprende los fundamentos de React Hooks y cómo mejorar tus componentes funcionales con useState, useEffect y custom hooks.",
-    content: "Los React Hooks revolucionaron la forma en que escribimos componentes..."
+    content: `React Hooks revolucionaron el desarrollo de componentes funcionales. useState permite agregar estado, useEffect maneja efectos secundarios, y los custom hooks extraen lógica reutilizable. El código se vuelve más declarativo y fácil de entender.`,
+    slug: "introduccion-a-react-hooks"
   },
   {
     id: 2,
     title: "Tailwind CSS vs Styled Components",
-    summary: "Comparativa entre dos de las librerías de CSS más populares en el ecosistema React y cuál elegir para tu proyecto.",
-    content: "En el mundo del desarrollo web moderno, la elección de herramientas CSS..."
+    summary: "Comparativa entre dos de las librerías de CSS más populares en el ecosistema React.",
+    content: `Tailwind CSS es utility-first con clases predefinidas para diseño consistente. Styled Components usa CSS-in-JS para estilos dinámicos y encapsulados. Tailwind ofrece mejor rendimiento inicial, Styled Components brilla en temas complejos.`,
+    slug: "tailwind-css-vs-styled-components"
   },
   {
     id: 3,
     title: "Next.js 15: Novedades",
-    summary: "Descubre las nuevas características y mejoras de la última versión de Next.js incluyendo el App Router y Server Components.",
-    content: "Next.js 15 introduce mejoras significativas en rendimiento..."
+    summary: "Descubre las nuevas características y mejoras de la última versión de Next.js.",
+    content: `Next.js 15 introduce App Router, Server Components para mejor seguridad y rendimiento, optimización de imágenes mejorada, Server Actions simplificadas, y Turbopack para compilación ultrarrápida.`,
+    slug: "nextjs-15-novedades"
   },
   {
     id: 4,
     title: "TypeScript Avanzado",
-    summary: "Técnicas avanzadas de TypeScript para aplicaciones enterprise con generics, decorators y patrones de diseño.",
-    content: "TypeScript ha evolucionado para soportar patrones complejos..."
+    summary: "Técnicas avanzadas de TypeScript para aplicaciones enterprise.",
+    content: `TypeScript enterprise usa generics para reutilización, tipos condicionales para APIs flexibles, mapped types para transformación, decorators para metadatos, y patrones como Brand Types para seguridad adicional.`,
+    slug: "typescript-avanzado"
   },
   {
     id: 5,
     title: "Optimización de React Apps",
-    summary: "Mejora el rendimiento de tus aplicaciones React con memo, useMemo, useCallback y técnicas de optimización.",
-    content: "El rendimiento es crucial en aplicaciones web modernas..."
+    summary: "Mejora el rendimiento de tus aplicaciones React con memo, useMemo, useCallback.",
+    content: `React.memo evita re-renders innecesarios. useMemo cachea cálculos costosos. useCallback memoiza funciones. La virtualización de listas y code splitting con React.lazy mejoran el rendimiento significativamente.`,
+    slug: "optimizacion-react-apps"
   },
   {
     id: 6,
     title: "Testing en React",
-    summary: "Guía completa para testing de componentes React con Jest, React Testing Library y mejores prácticas.",
-    content: "El testing es fundamental para aplicaciones robustas..."
+    summary: "Guía completa para testing de componentes React con Jest y React Testing Library.",
+    content: `Jest proporciona framework completo con mocking. React Testing Library enfoca testing desde perspectiva del usuario. MSW permite interceptar requests de red para testing realista de APIs.`,
+    slug: "testing-en-react"
   },
   {
     id: 7,
     title: "State Management con Zustand",
-    summary: "Alternativa moderna a Redux para manejo de estado en aplicaciones React con Zustand.",
-    content: "Zustand ofrece una solución simple y poderosa..."
+    summary: "Alternativa moderna a Redux para manejo de estado en aplicaciones React.",
+    content: `Zustand ofrece API simple sin providers, rendimiento excelente con selectores optimizados, soporte para middleware y persistencia, y perfecta integración con TypeScript para aplicaciones modernas.`,
+    slug: "state-management-zustand"
   }
 ];
 
@@ -121,12 +129,15 @@ export default function BlogPage() {
                     aplicaciones más robustas y mantenibles.
                   </p>
                 </div>
-                <button className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors">
+                <Link 
+                  href={`/blog/${featuredPost.slug}`}
+                  className="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors"
+                >
                   Leer más
                   <svg className="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
-                </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -154,9 +165,12 @@ export default function BlogPage() {
                       <p className="text-gray-600 mb-4 line-clamp-3 leading-relaxed">
                         {post.summary}
                       </p>
-                      <button className="text-blue-600 hover:text-blue-700 font-medium transition-colors">
+                      <Link 
+                        href={`/blog/${post.slug}`}
+                        className="text-blue-600 hover:text-blue-700 font-medium transition-colors"
+                      >
                         Leer
-                      </button>
+                      </Link>
                     </div>
                   </div>
                 </div>
