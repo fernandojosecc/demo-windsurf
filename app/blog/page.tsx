@@ -1,68 +1,70 @@
+"use client";
+
 import Link from 'next/link';
-
-interface BlogPost {
-  id: number;
-  title: string;
-  summary: string;
-  content: string;
-  slug: string;
-}
-
-const mockPosts: BlogPost[] = [
-  {
-    id: 1,
-    title: "Introducción a React Hooks",
-    summary: "Aprende los fundamentos de React Hooks y cómo mejorar tus componentes funcionales con useState, useEffect y custom hooks.",
-    content: `React Hooks revolucionaron el desarrollo de componentes funcionales. useState permite agregar estado, useEffect maneja efectos secundarios, y los custom hooks extraen lógica reutilizable. El código se vuelve más declarativo y fácil de entender.`,
-    slug: "introduccion-a-react-hooks"
-  },
-  {
-    id: 2,
-    title: "Tailwind CSS vs Styled Components",
-    summary: "Comparativa entre dos de las librerías de CSS más populares en el ecosistema React.",
-    content: `Tailwind CSS es utility-first con clases predefinidas para diseño consistente. Styled Components usa CSS-in-JS para estilos dinámicos y encapsulados. Tailwind ofrece mejor rendimiento inicial, Styled Components brilla en temas complejos.`,
-    slug: "tailwind-css-vs-styled-components"
-  },
-  {
-    id: 3,
-    title: "Next.js 15: Novedades",
-    summary: "Descubre las nuevas características y mejoras de la última versión de Next.js.",
-    content: `Next.js 15 introduce App Router, Server Components para mejor seguridad y rendimiento, optimización de imágenes mejorada, Server Actions simplificadas, y Turbopack para compilación ultrarrápida.`,
-    slug: "nextjs-15-novedades"
-  },
-  {
-    id: 4,
-    title: "TypeScript Avanzado",
-    summary: "Técnicas avanzadas de TypeScript para aplicaciones enterprise.",
-    content: `TypeScript enterprise usa generics para reutilización, tipos condicionales para APIs flexibles, mapped types para transformación, decorators para metadatos, y patrones como Brand Types para seguridad adicional.`,
-    slug: "typescript-avanzado"
-  },
-  {
-    id: 5,
-    title: "Optimización de React Apps",
-    summary: "Mejora el rendimiento de tus aplicaciones React con memo, useMemo, useCallback.",
-    content: `React.memo evita re-renders innecesarios. useMemo cachea cálculos costosos. useCallback memoiza funciones. La virtualización de listas y code splitting con React.lazy mejoran el rendimiento significativamente.`,
-    slug: "optimizacion-react-apps"
-  },
-  {
-    id: 6,
-    title: "Testing en React",
-    summary: "Guía completa para testing de componentes React con Jest y React Testing Library.",
-    content: `Jest proporciona framework completo con mocking. React Testing Library enfoca testing desde perspectiva del usuario. MSW permite interceptar requests de red para testing realista de APIs.`,
-    slug: "testing-en-react"
-  },
-  {
-    id: 7,
-    title: "State Management con Zustand",
-    summary: "Alternativa moderna a Redux para manejo de estado en aplicaciones React.",
-    content: `Zustand ofrece API simple sin providers, rendimiento excelente con selectores optimizados, soporte para middleware y persistencia, y perfecta integración con TypeScript para aplicaciones modernas.`,
-    slug: "state-management-zustand"
-  }
-];
+import { postsApi, BlogPost } from '@/lib/api';
+import React from 'react';
 
 export default function BlogPage() {
-  const featuredPost = mockPosts[0];
-  const gridPosts = mockPosts.slice(1, 7);
+  const [posts, setPosts] = React.useState<BlogPost[]>([]);
+  const [loading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const fetchedPosts = await postsApi.getPosts();
+        setPosts(fetchedPosts);
+      } catch (error) {
+        console.error('Error fetching posts:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <div className="flex-grow flex items-center justify-center">
+          <div className="text-gray-600">Cargando posts...</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (posts.length === 0) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <div className="flex-grow flex items-center justify-center">
+          <div className="text-gray-600">No hay posts disponibles.</div>
+        </div>
+      </div>
+    );
+  }
+
+  const featuredPost = posts[0];
+  const gridPosts = posts.slice(1, 7);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <div className="flex-grow flex items-center justify-center">
+          <div className="text-gray-600">Cargando posts...</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!featuredPost) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <div className="flex-grow flex items-center justify-center">
+          <div className="text-gray-600">No hay posts disponibles.</div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col">
